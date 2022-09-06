@@ -1,0 +1,8 @@
+.qmake.stash
+.DS_Store
+.vscode/
+build/
+moc_*
+Makefile
+ui_*
+config.h
