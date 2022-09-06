@@ -24,7 +24,11 @@
 #include <QTimer>
 #include <OpenWeatherAPI.h>
 
-#include "ui_weatherFxLite.h"
+#ifdef Q_OS_LINUX
+  #include <QDesktopWidget>
+#endif
+
+#include "ui_weatherfxLite.h"
 
 class WeatherFXLite : public QObject {
 Q_OBJECT

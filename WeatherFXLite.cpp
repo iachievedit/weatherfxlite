@@ -27,6 +27,16 @@ WeatherFXLite::WeatherFXLite() {
   ui.setupUi(window);  
 
   window->setStyleSheet("background-color:black;");
+
+  #ifdef Q_OS_LINUX
+
+  window->setWindowFlags(Qt::FramelessWindowHint);
+  QRect screenRect = QApplication::desktop()->screenGeometry(1);
+  window->move(QPoint(screenRect.x(), screenRect.y()));
+
+  #endif
+
+
   window->show();
 
   openWeather = new OpenWeatherAPI();  
