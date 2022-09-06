@@ -12,6 +12,7 @@ It started one day where it was perpetually 80 degrees with rain and a thunderst
 
 <div align="center">
 <img src="docs/theWorst.png">
+<img src="docs/theWorstHeat.png">
 </div>
 
 Either way, I was mildly griefstricken when it dawned on me that the end had come to my faithful weather forecast companion.  So, being the engineer and tinkerer that I am I set about to "replace" the WeatherFX with a Raspberry Pi and HyperPixel display.  WeatherFXLite is the result for the time being.
