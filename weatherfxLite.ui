@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
-    <height>709</height>
+    <width>720</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,7 +94,7 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>20</width>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>
@@ -104,6 +104,11 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QLabel" name="label">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>HI</string>
              </property>
@@ -114,6 +119,11 @@
            </item>
            <item>
             <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>LO</string>
              </property>
@@ -131,7 +141,7 @@
              <widget class="QLabel" name="hiTemp">
               <property name="font">
                <font>
-                <pointsize>24</pointsize>
+                <pointsize>36</pointsize>
                </font>
               </property>
               <property name="text">
@@ -159,7 +169,7 @@
              <widget class="QLabel" name="loTemp">
               <property name="font">
                <font>
-                <pointsize>24</pointsize>
+                <pointsize>36</pointsize>
                </font>
               </property>
               <property name="text">
