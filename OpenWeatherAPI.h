@@ -26,7 +26,9 @@
 
 typedef struct CurrentConditions {
   QString condition;
-  int8_t temperature;
+  int temperature;
+  int low = INT_MAX;
+  int high = INT_MIN;
 } CurrentConditions;
 
 class OpenWeatherAPI : public QObject {
@@ -39,6 +41,7 @@ Q_OBJECT
   void updateCurrentConditions(void);
   void updateCurrentForecast(void);
   CurrentConditions getCurrentConditions(void);
+  CurrentConditions getCurrentForecast(void);
 
   signals:
   void currentConditionsUpdate(void);
@@ -46,6 +49,7 @@ Q_OBJECT
 
   private:
   FileDownloader* fDownloader;
+  FileDownloader* fcastDownloader;
   CurrentConditions currentConditions;
 
   public slots:

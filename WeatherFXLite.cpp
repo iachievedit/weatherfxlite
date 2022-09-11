@@ -20,6 +20,7 @@
 #include "WeatherFXLite.h"
 
 #define CURRENT_CONDITION_TICKS 60
+#define CURRENT_FORECAST_TICKS 60
 
 WeatherFXLite::WeatherFXLite() {
 
@@ -39,12 +40,13 @@ WeatherFXLite::WeatherFXLite() {
 
   window->show();
 
-  openWeather = new OpenWeatherAPI();  
+  // Use WeatherKit
+  weatherAPI = new WeatherKitAPI();  
   
-
   timer = new QTimer(this);
 
-  connect(openWeather, SIGNAL(currentConditionsUpdate()), this, SLOT(updateWeatherDisplay()));
+  connect(weatherAPI, SIGNAL(currentConditionsUpdate()), this, SLOT(updateWeatherDisplay()));
+  connect(weatherAPI, SIGNAL(currentForecastUpdate()), this, SLOT(updateForecastDisplay()));
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
   timer->start(1000);
@@ -52,18 +54,22 @@ WeatherFXLite::WeatherFXLite() {
 }
 
 void WeatherFXLite::updateWeatherDisplay(void) {
-  CurrentConditions current = openWeather->getCurrentConditions();
+  CurrentConditions current = weatherAPI->getCurrentConditions();
   ui.currentCondition->setText(current.condition);
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
-
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
+}
 
+void WeatherFXLite::updateForecastDisplay(void) {
+  CurrentConditions current = weatherAPI->getCurrentConditions();
+  ui.hiTemp->setText(QString::number(current.high) + QString("°"));
+  ui.loTemp->setText(QString::number(current.low) +  QString("°"));
 }
 
 void WeatherFXLite::timerTick(void) {
 
-  currentConditionTicks++;
+  currentConditionTicks++; currentForecastTicks++;
 
   QDateTime now = QDateTime().currentDateTime();
   QString timeNow = now.toString("hh:mm A");
@@ -71,8 +77,13 @@ void WeatherFXLite::timerTick(void) {
   ui.currentTime->setText(timeNow);
   ui.currentDate->setText(dateNow);
 
+  if (currentForecastTicks % CURRENT_FORECAST_TICKS == 0 || boot) {
+    weatherAPI->updateCurrentForecast();
+    currentForecastTicks = 0;
+  }
+
   if (currentConditionTicks % CURRENT_CONDITION_TICKS == 0 || boot) {
-    openWeather->updateCurrentConditions();
+    weatherAPI->updateCurrentConditions();
     currentConditionTicks = 0;
     boot = false;
   }

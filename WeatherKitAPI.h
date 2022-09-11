@@ -17,46 +17,45 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef __WEATHERFXLITE_H__
-#define __WEATHERFXLITE_H__
+#ifndef __WEATHERKITAPI_H__
+#define __WEATHERKITAPI_H__
 
-#include <QWidget>
-#include <QTimer>
+#include <QObject>
 
+#include "FileDownloader.h"
 
-//#include <OpenWeatherAPI.h>
+typedef struct CurrentConditions {
+  QString condition;
+  int temperature;
+  int low = INT_MAX;
+  int high = INT_MIN;
+} CurrentConditions;
 
-#include <WeatherKitAPI.h>
-
-#ifdef Q_OS_LINUX
-  #include <QDesktopWidget>
-#endif
-
-#include "ui_weatherFxLite.h"
-
-class WeatherFXLite : public QObject {
+class WeatherKitAPI : public QObject {
 Q_OBJECT
   public:
-  WeatherFXLite();
+  WeatherKitAPI();
+  ~WeatherKitAPI();
+
+  public:
+  void updateCurrentConditions(void);
+  void updateCurrentForecast(void);
+  CurrentConditions getCurrentConditions(void);
+  CurrentConditions getCurrentForecast(void);
+
+  signals:
+  void currentConditionsUpdate(void);
+  void currentForecastUpdate(void);
 
   private:
-  QWidget* window;
-  QTimer* timer;
-  Ui::Form ui;
-  WeatherKitAPI* weatherAPI;
+  FileDownloader* fDownloader;
+  FileDownloader* fcastDownloader;
+  CurrentConditions currentConditions;
+  std::string makeJWT();
 
-  private:
-  std::string backgroundForTemperature(short temp);
-
-  private:
-  bool boot {true};
-  int currentConditionTicks { 0 };
-  int currentForecastTicks { 0 };
-
-  private slots:
-  void updateWeatherDisplay();
-  void updateForecastDisplay();
-  void timerTick();
+  public slots:
+  void parseCurrentConditions(void);
+  void parseCurrentForecast(void);
 
 };
 

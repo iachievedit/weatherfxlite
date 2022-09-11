@@ -29,6 +29,8 @@ using std::cout;
 using std::endl;
 
 #define OPENWEATHERMAP_CURRENT_COND "https://api.openweathermap.org/data/2.5/weather"
+#define OPENWEATHERMAP_FORECAST "https://api.openweathermap.org/data/2.5/forecast"
+
 
 #include "config.h"
 
@@ -54,6 +56,20 @@ void OpenWeatherAPI::updateCurrentConditions(void) {
 
 }
 
+void OpenWeatherAPI::updateCurrentForecast(void) {
+  QString url(OPENWEATHERMAP_FORECAST);
+  url += "?appId=";
+  url += OPENWEATHERMAP_APPID;
+  url += OPENWEATHERMAP_LATLNG;
+  url += "&units=imperial";
+
+  QUrl forecast(url);
+
+  fcastDownloader = new FileDownloader(forecast, this);
+  connect(fcastDownloader, SIGNAL(downloaded()), this, SLOT(parseCurrentForecast()));
+
+}
+
 void OpenWeatherAPI::parseCurrentConditions(void) {
   QString current(fDownloader->downloadedData());
 
@@ -67,6 +83,8 @@ void OpenWeatherAPI::parseCurrentConditions(void) {
     QJsonObject m = json["main"].toObject();
     QJsonValue  t = m["temp"];
     currentConditions.temperature = floor(t.toDouble());
+
+
   }
 
   // "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}]
@@ -82,14 +100,51 @@ void OpenWeatherAPI::parseCurrentConditions(void) {
 
 }
 
-void OpenWeatherAPI::updateCurrentForecast(void) {
-
-}
-
 void OpenWeatherAPI::parseCurrentForecast(void) {
+    QDateTime now = QDateTime().currentDateTime();
 
+  QString forecast(fcastDownloader->downloadedData());
+  cout << forecast.toStdString() << endl;
+
+  QJsonDocument doc = QJsonDocument::fromJson(forecast.toUtf8());
+  QJsonObject  json = doc.object();
+
+  if (json.contains("list")) {
+
+    QJsonArray forecasts = json["list"].toArray(); // forecasts are in 3 hour chunks
+
+    for (auto i = forecasts.begin(); i != forecasts.end(); i++) {
+
+      QJsonObject f = QJsonValue(*i).toObject();
+
+      if (f.contains("dt_txt")) {
+        QJsonValue dt = f["dt_text"];
+
+        QDateTime qdt = QDateTime::fromString(dt.toString(), "yyyy-MM-dd HH:mm:ss");
+
+        // Is the forecast for today?
+        if (qdt.date() == now.date()) {
+          if (f.contains("main")) {
+            QJsonObject m = f["main"].toObject();
+
+            double hi = floor(m["temp_max"].toDouble());
+            double lo = floor(m["temp_min"].toDouble());
+
+            if (lo < currentConditions.low)  currentConditions.low  = lo;
+            if (hi > currentConditions.high) currentConditions.high = hi;
+          }
+        }
+      }
+    }
+  }
+
+  emit currentForecastUpdate();
 }
 
 CurrentConditions OpenWeatherAPI::getCurrentConditions(void) {
+  return currentConditions;
+}
+
+CurrentConditions OpenWeatherAPI::getCurrentForecast(void) {
   return currentConditions;
 }

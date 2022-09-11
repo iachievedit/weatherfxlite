@@ -8,12 +8,15 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QList>
+#include <QPair>
 
-class FileDownloader : public QObject
-{
+typedef QList<QPair<QByteArray, QByteArray> > RequestHeaders;
+
+class FileDownloader : public QObject {
  Q_OBJECT
  public:
-  explicit FileDownloader(QUrl url, QObject* parent = 0);
+  explicit FileDownloader(QUrl url, QObject* parent = nullptr, RequestHeaders* headers = nullptr);
   virtual ~FileDownloader();
   QByteArray downloadedData() const;
 
