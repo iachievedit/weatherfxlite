@@ -141,7 +141,7 @@
              <widget class="QLabel" name="hiTemp">
               <property name="font">
                <font>
-                <pointsize>36</pointsize>
+                <pointsize>40</pointsize>
                </font>
               </property>
               <property name="text">
@@ -169,7 +169,7 @@
              <widget class="QLabel" name="loTemp">
               <property name="font">
                <font>
-                <pointsize>36</pointsize>
+                <pointsize>40</pointsize>
                </font>
               </property>
               <property name="text">
