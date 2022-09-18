@@ -26,6 +26,7 @@
 
 typedef struct CurrentConditions {
   QString condition;
+  QString iconPath;
   int temperature;
   int low = INT_MAX;
   int high = INT_MIN;

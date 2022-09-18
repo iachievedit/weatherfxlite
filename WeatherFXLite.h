@@ -22,6 +22,9 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 
 //#include <OpenWeatherAPI.h>
@@ -43,9 +46,13 @@ Q_OBJECT
   QWidget* window;
   QTimer* timer;
   Ui::Form ui;
+
+  QGraphicsScene* scene {NULL};
+  QGraphicsView* view {NULL};
+  QGraphicsPixmapItem* item {NULL};
+
   WeatherKitAPI* weatherAPI;
 
-  private:
   std::string backgroundForTemperature(short temp);
 
   private:

@@ -59,6 +59,22 @@ void WeatherFXLite::updateWeatherDisplay(void) {
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
+
+  qDebug() << current.iconPath;
+
+  QImage image(current.iconPath);
+  if (scene == NULL) {
+    scene = new QGraphicsScene();
+  }
+
+  if (item) {
+    delete item;
+  }
+
+  item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+  scene->addItem(item);
+  ui.graphicsView->setScene(scene);
+
 }
 
 void WeatherFXLite::updateForecastDisplay(void) {

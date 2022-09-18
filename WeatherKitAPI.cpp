@@ -79,9 +79,16 @@ static std::map<QString, QString> conditionCodeMap = {
   {"TropicalStorm", "Tropical Storm"},
 };
 
+static std::map<QString, QString> iconPathMap = {
+  {"Clear", "Clear.png"},
+  {"MostlyClear", "MostlyClear.png"}
+};
+
+// Constructor
 WeatherKitAPI::WeatherKitAPI() {
 }
 
+// Destructor
 WeatherKitAPI::~WeatherKitAPI() {
 }
 
@@ -143,6 +150,14 @@ void WeatherKitAPI::parseCurrentConditions(void) {
     QJsonValue c = w["conditionCode"];
 
     currentConditions.condition = conditionCodeMap[c.toString()];
+
+    QJsonValue d = w["daylight"];
+
+    if (d.toBool()) {
+      currentConditions.iconPath = "icons/day/" + iconPathMap[c.toString()];
+    } else {
+      currentConditions.iconPath = "icons/night/" + iconPathMap[c.toString()];
+    }
   }
 
   emit currentConditionsUpdate();
@@ -208,6 +223,15 @@ CurrentConditions WeatherKitAPI::getCurrentForecast(void) {
 
 std::string WeatherKitAPI::makeJWT(void) {
 
+  const char* priv_key(
+  #include "weatherkit/priv.key"
+  );
+
+  const char* pub_key = (
+  #include "weatherkit/pub.key"
+  );
+
+#if 0
   std::ifstream t("weatherkit/priv.key");
   std::stringstream buffer;
   buffer << t.rdbuf();
@@ -217,6 +241,7 @@ std::string WeatherKitAPI::makeJWT(void) {
   t.open("weatherkit/pub.key");
   buffer << t.rdbuf();
   std::string pub_key = buffer.str();
+#endif
 
   auto token = jwt::create()
                    .set_issuer(APPLE_DEVELOPER_TEAM_ID)
