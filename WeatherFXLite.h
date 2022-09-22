@@ -33,9 +33,10 @@
 
 #ifdef Q_OS_LINUX
   #include <QDesktopWidget>
-#endif
-
+  #include "ui_weatherfxLite.h"
+#else
 #include "ui_weatherFxLite.h"
+#endif
 
 class WeatherFXLite : public QObject {
 Q_OBJECT
