@@ -176,7 +176,10 @@ void WeatherKitAPI::parseCurrentConditions(void) {
 
   }
 
+  fDownloader->deleteLater();
+
   emit currentConditionsUpdate();
+
 }
 
 void WeatherKitAPI::parseCurrentForecast(void) {
@@ -224,6 +227,8 @@ void WeatherKitAPI::parseCurrentForecast(void) {
         }
       }
     }
+
+    fcastDownloader->deleteLater();
     emit currentForecastUpdate();
   }
 }
