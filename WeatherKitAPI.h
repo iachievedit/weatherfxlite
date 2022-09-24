@@ -21,12 +21,19 @@
 #define __WEATHERKITAPI_H__
 
 #include <QObject>
+#include <QPair>
 
 #include "FileDownloader.h"
+
+typedef struct {
+  unsigned char* data;
+  unsigned int len;
+} WeatherIcon;
 
 typedef struct CurrentConditions {
   QString condition;
   QString iconPath;
+  WeatherIcon icon;
   int temperature;
   int low = INT_MAX;
   int high = INT_MIN;
