@@ -14,8 +14,8 @@ QT += widgets network
 
 # Input
 FORMS   += weatherFxLite.ui
-HEADERS += OpenWeatherAPI.h WeatherKitAPI.h FileDownloader.h WeatherFXLite.h
-SOURCES += OpenWeatherAPI.cpp WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp
+HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h
+SOURCES += WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp
 
 # Output
 DESTDIR = build

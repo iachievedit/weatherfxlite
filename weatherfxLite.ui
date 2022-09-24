@@ -216,21 +216,6 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="currentCondition">
-       <property name="font">
-        <font>
-         <pointsize>72</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <spacer name="horizontalSpacer_4">
@@ -248,6 +233,12 @@
        <item>
         <widget class="QGraphicsView" name="graphicsView">
          <property name="minimumSize">
+          <size>
+           <width>256</width>
+           <height>256</height>
+          </size>
+         </property>
+         <property name="maximumSize">
           <size>
            <width>256</width>
            <height>256</height>
@@ -272,6 +263,21 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="currentCondition">
+       <property name="font">
+        <font>
+         <pointsize>72</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_2">

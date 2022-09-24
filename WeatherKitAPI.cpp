@@ -25,6 +25,8 @@
 
 #include <jwt-cpp/jwt.h>
 
+#include <icons/icons.h>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -79,9 +81,14 @@ static std::map<QString, QString> conditionCodeMap = {
   {"TropicalStorm", "Tropical Storm"},
 };
 
-static std::map<QString, QString> iconPathMap = {
-  {"Clear", "Clear.png"},
-  {"MostlyClear", "MostlyClear.png"}
+static std::map<QString, WeatherIcon> nightIcons = {
+  {"Clear",       {icons_night_Clear_png, icons_night_Clear_png_len}},
+  {"MostlyClear", {icons_night_MostlyClear_png, icons_night_MostlyClear_png_len}}
+};
+
+static std::map<QString, WeatherIcon> dayIcons = {
+  {"Clear", {icons_day_Clear_png,icons_day_Clear_png_len}},
+  {"MostlyClear", {icons_day_Clear_png, icons_day_Clear_png_len}},
 };
 
 // Constructor
@@ -153,11 +160,20 @@ void WeatherKitAPI::parseCurrentConditions(void) {
 
     QJsonValue d = w["daylight"];
 
+    #if 0
     if (d.toBool()) {
       currentConditions.iconPath = "icons/day/" + iconPathMap[c.toString()];
     } else {
       currentConditions.iconPath = "icons/night/" + iconPathMap[c.toString()];
     }
+    #endif
+
+    if (d.toBool()) {
+      currentConditions.icon = dayIcons[c.toString()];
+    } else {
+      currentConditions.icon = nightIcons[c.toString()];
+    }
+
   }
 
   fDownloader->deleteLater();

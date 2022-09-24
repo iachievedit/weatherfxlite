@@ -61,9 +61,6 @@ void WeatherFXLite::updateWeatherDisplay(void) {
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
 
-  qDebug() << current.iconPath;
-
-  QImage image(current.iconPath);
   if (scene == NULL) {
     scene = new QGraphicsScene();
   }
@@ -72,9 +69,14 @@ void WeatherFXLite::updateWeatherDisplay(void) {
     delete item;
   }
 
-  item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-  scene->addItem(item);
-  ui.graphicsView->setScene(scene);
+  QPixmap icon;
+  if (icon.loadFromData(current.icon.data, current.icon.len, "png")) {
+    item = new QGraphicsPixmapItem(icon);
+    scene->addItem(item);
+    ui.graphicsView->setScene(scene);
+  } else {
+    qDebug() << "Unable to load icon data";
+  }
 
 }
 

@@ -7,3 +7,4 @@ Makefile
 ui_*
 config.h
 priv.key
+weatherkit
