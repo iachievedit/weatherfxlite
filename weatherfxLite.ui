@@ -10,24 +10,36 @@
     <height>720</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>720</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>720</width>
+    <height>720</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="sizeConstraint">
-    <enum>QLayout::SetMinAndMaxSize</enum>
+    <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>10</number>
    </property>
    <property name="topMargin">
-    <number>20</number>
+    <number>10</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>10</number>
    </property>
    <property name="bottomMargin">
-    <number>20</number>
+    <number>10</number>
    </property>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -243,6 +255,22 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
