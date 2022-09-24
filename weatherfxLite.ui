@@ -268,7 +268,7 @@
       <widget class="QLabel" name="currentCondition">
        <property name="font">
         <font>
-         <pointsize>72</pointsize>
+         <pointsize>60</pointsize>
         </font>
        </property>
        <property name="text">
