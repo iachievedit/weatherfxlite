@@ -77,14 +77,14 @@
        <item>
         <widget class="QLabel" name="currentTime">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="font">
           <font>
-           <pointsize>60</pointsize>
+           <pointsize>48</pointsize>
            <kerning>true</kerning>
           </font>
          </property>
