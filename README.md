@@ -1,4 +1,4 @@
-# weatherfxlite
+# WeatherFXLite
 
 ## What is it?
 
@@ -26,7 +26,7 @@ If you're only interested in running the application on your desktop there's no 
 Now, if you're interested in a makeshift replica of the original WeatherFX, you can invest in:
 
 * Raspberry Pi 4
-* HyperPixel 4.0 display
+* [HyperPixel 4.0 Square display](https://shop.pimoroni.com/products/hyperpixel-4-square?variant=30138251444307)
 
 The end result of your efforts will be something much more appealing!
 
@@ -38,6 +38,8 @@ NB:  This is a work in progress, hopefully by the time folks in the wild see thi
 
 ## Configure and Build
 ### Configuration
+
+WeatherFXLite uses the REST API for Apple's [WeatherKit]().  To use WeatherKit and build this project you'll need an Apple Developer Account.  See our [tutorial](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/) for details on obtaining a private and public key.
 
 WeatherFXLite uses the [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5.  To build the application you'll need to provide an OpenWeatherMap API key and the latitude/longitude of the location.  The exact API endpoint is [current](https://openweathermap.org/current).
 

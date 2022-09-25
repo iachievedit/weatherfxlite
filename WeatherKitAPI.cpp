@@ -83,12 +83,13 @@ static std::map<QString, QString> conditionCodeMap = {
 
 static std::map<QString, WeatherIcon> nightIcons = {
   {"Clear",       {icons_night_Clear_png, icons_night_Clear_png_len}},
-  {"MostlyClear", {icons_night_MostlyClear_png, icons_night_MostlyClear_png_len}}
+  {"MostlyClear", {icons_night_MostlyClear_png, icons_night_MostlyClear_png_len}},
 };
 
 static std::map<QString, WeatherIcon> dayIcons = {
   {"Clear", {icons_day_Clear_png,icons_day_Clear_png_len}},
   {"MostlyClear", {icons_day_Clear_png, icons_day_Clear_png_len}},
+  {"MostlyCloudy", {icons_day_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
 };
 
 // Constructor
@@ -244,6 +245,7 @@ CurrentConditions WeatherKitAPI::getCurrentForecast(void) {
 
 std::string WeatherKitAPI::makeJWT(void) {
 
+  // Compile key directly into binary
   const char* priv_key(
   #include "weatherkit/priv.key"
   );
@@ -252,6 +254,7 @@ std::string WeatherKitAPI::makeJWT(void) {
   #include "weatherkit/pub.key"
   );
 
+  // Load key from file
 #if 0
   std::ifstream t("weatherkit/priv.key");
   std::stringstream buffer;
