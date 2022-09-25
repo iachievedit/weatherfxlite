@@ -76,7 +76,7 @@ static std::map<QString, QString> conditionCodeMap = {
   {"Hurricane",              "Hurricane"},
   {"IsolatedThunderstorms",  "Isolated Thunderstorms"},
   {"SevereThunderstorm",     "Severe Thunderstorm"},
-  {"Thunderstorm",           "Thunderstorm"},
+  {"Thunderstorms",          "Thunderstorms"},
   {"Tornado",                "Tornado"},
   {"TropicalStorm",          "Tropical Storm"},
 };
@@ -92,6 +92,7 @@ static std::map<QString, WeatherIcon> dayIcons = {
   {"MostlyCloudy", {icons_day_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
   {"PartlyCloudy", {icons_day_PartlyCloudy_png, icons_day_PartlyCloudy_png_len}},
   {"Rain",         {icons_day_Rain_png, icons_day_Rain_png_len}},
+  {"Thunderstorms", {icons_day_Thunderstorms_png, icons_day_Thunderstorms_png_len}},
 };
 
 // Constructor
