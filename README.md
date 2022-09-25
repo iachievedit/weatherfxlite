@@ -36,19 +36,37 @@ The end result of your efforts will be something much more appealing!
 
 NB:  This is a work in progress, hopefully by the time folks in the wild see this I'll have added the current conditions icon and temperature forecasts for the day.
 
+**2022-09-25 Update**
+
+Additional icons and tightening up the display!
+
+<div align="center">
+<img src="docs/weatherfxlite2.jpg">
+</div>
+
 ## Configure and Build
 ### Configuration
 
-WeatherFXLite uses the REST API for Apple's [WeatherKit]().  To use WeatherKit and build this project you'll need an Apple Developer Account.  See our [tutorial](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/) for details on obtaining a private and public key.
+WeatherFXLite uses the REST API for Apple's [WeatherKit](https://developer.apple.com/weatherkit/).  To use WeatherKit and build this project you'll need an Apple Developer Account.  See our [tutorial](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/) for details on obtaining a private and public key.
 
-WeatherFXLite uses the [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5.  To build the application you'll need to provide an OpenWeatherMap API key and the latitude/longitude of the location.  The exact API endpoint is [current](https://openweathermap.org/current).
-
-`config.h`:
+Once you have your key and Apple Developer account information, create `config.h`:
 
 ```
-#define OPENWEATHERMAP_APP_ID "<YOUR_OPENWEATHER_APP_ID>"
-#define OPENWEATHERMAP_LATLNG "&lat=<YOUR_LAT>lon=<YOUR_LNG>"
+// WeatherKit
+// LATLNG is LAT/LNG for your location
+#define LATLNG "32.7767/-96.7970"
+
+// Your Apple Developer Information
+#define APPLE_DEVELOPER_TEAM_ID "5367BG94QP"
+#define WEATHERKIT_KEY_ID "S3J684C78A"
+#define WEATHERKIT_APP_ID "5367BG94QP.it.iachieved.weatherfx"
+#define WEATHERKIT_APP "it.iachieved.weatherfx"
 ```
+
+**NOTE**:  Your Apple Developer team ID, key ID, etc. will be unique for you.  The values should not be copy/pasted blindly!
+
+
+For what it's worth,  I started developing WeatherFXLite with the free version of [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5 but the current conditions for my area (North Texas) were frequently incorrect.  Rather than paying for yet another service (like AccuWeather), I went with utilizing the WeatherKit credits (500,000 API calls per month) in my Apple Developer account.
 
 ### macOS
 
@@ -75,6 +93,8 @@ To run the application from the command line:
 ```
 % build/weatherfxLite.app/Contents/MacOS/weatherfxLite
 ```
+
+**NOTE**:  Homebrew may be installed in a different location on an `x86` Mac.
 
 ### Linux
 
