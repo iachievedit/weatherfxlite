@@ -103,12 +103,13 @@ To run the application from the command line:
 To build on Linux, and preferably the Raspberry Pi with an appropriate external display:
 
 ```
-sudo apt-get install qtbase5-dev
+sudo apt-get install qtbase5-dev libcurl4-openssl-dev
 ```
 
 Then:
 
 ```
-qmake
+qmake INCLUDEPATH+="/usr/include/openssl" \
+      LIBS+="-L/usr/lib/openssl -lcrypto"
 make
 ```
