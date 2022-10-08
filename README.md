@@ -65,7 +65,6 @@ Once you have your key and Apple Developer account information, create `config.h
 
 **NOTE**:  Your Apple Developer team ID, key ID, etc. will be unique for you.  The values should not be copy/pasted blindly!
 
-
 For what it's worth,  I started developing WeatherFXLite with the free version of [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5 but the current conditions for my area (North Texas) were frequently incorrect.  Rather than paying for yet another service (like AccuWeather), I went with utilizing the WeatherKit credits (500,000 API calls per month) in my Apple Developer account.
 
 ### macOS
@@ -117,10 +116,15 @@ make
 The default Raspberry Pi OS has all manner of screensaver/energy saver mechanisms running, so let's turn all that off.
 
 ```
-
+xset s off
+xset s noblank
+xset -dpms
 ```
 
 #### Raspberry Pi Imager
 
 If you are just starting out with a blank SD card for your Raspberry Pi, we recommend the official [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and the 64-bit Raspberry Pi OS.
 
+# Legal
+
+This code is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).  Why?  Because we are using the open source license of [Qt](https://www.qt.io/licensing/).
