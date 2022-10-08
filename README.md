@@ -98,12 +98,12 @@ To run the application from the command line:
 % build/weatherfxLite.app/Contents/MacOS/weatherfxLite
 ```
 
-### Linux
+### Debian/Ubuntu Linux
 
-To build on Linux, and preferably the Raspberry Pi with an appropriate external display:
+To build on Debian/Ubuntu Linux, and preferably the Raspberry Pi with an appropriate external display:
 
 ```
-sudo apt-get install qtbase5-dev libcurl4-openssl-dev
+sudo apt-get install qtbase5-dev libssl-dev
 ```
 
 Then:
@@ -113,3 +113,14 @@ qmake INCLUDEPATH+="/usr/include/openssl" \
       LIBS+="-L/usr/lib/openssl -lcrypto"
 make
 ```
+
+The default Raspberry Pi OS has all manner of screensaver/energy saver mechanisms running, so let's turn all that off.
+
+```
+
+```
+
+#### Raspberry Pi Imager
+
+If you are just starting out with a blank SD card for your Raspberry Pi, we recommend the official [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and the 64-bit Raspberry Pi OS.
+

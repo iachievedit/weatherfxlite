@@ -84,15 +84,19 @@ static std::map<QString, QString> conditionCodeMap = {
 static std::map<QString, WeatherIcon> nightIcons = {
   {"Clear",       {icons_night_Clear_png,       icons_night_Clear_png_len}},
   {"MostlyClear", {icons_night_MostlyClear_png, icons_night_MostlyClear_png_len}},
+  {"Snow",        {icons_night_Snow_png,        icons_night_Snow_png_len}},
+  {"Cloudy",      {icons_night_Cloudy_png,      icons_night_Cloudy_png_len}},
+  {"MostlyCloudy",{icons_night_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
 };
 
 static std::map<QString, WeatherIcon> dayIcons = {
-  {"Clear", {icons_day_Clear_png,icons_day_Clear_png_len}},
-  {"MostlyClear", {icons_day_Clear_png, icons_day_Clear_png_len}},
-  {"MostlyCloudy", {icons_day_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
-  {"PartlyCloudy", {icons_day_PartlyCloudy_png, icons_day_PartlyCloudy_png_len}},
-  {"Rain",         {icons_day_Rain_png, icons_day_Rain_png_len}},
+  {"Clear",         {icons_day_Clear_png,icons_day_Clear_png_len}},
+  {"MostlyClear",   {icons_day_Clear_png, icons_day_Clear_png_len}},
+  {"MostlyCloudy",  {icons_day_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
+  {"PartlyCloudy",  {icons_day_PartlyCloudy_png, icons_day_PartlyCloudy_png_len}},
+  {"Rain",          {icons_day_Rain_png, icons_day_Rain_png_len}},
   {"Thunderstorms", {icons_day_Thunderstorms_png, icons_day_Thunderstorms_png_len}},
+  {"Cloudy",        {icons_day_Cloudy_png, icons_day_Cloudy_png_len}}
 };
 
 // Constructor
@@ -147,7 +151,8 @@ void WeatherKitAPI::updateCurrentForecast(void) {
 void WeatherKitAPI::parseCurrentConditions(void) {
   QString current(fDownloader->downloadedData());
 
-  cout << current.toStdString() << endl;
+  qDebug() << "Parse current conditions";
+  qDebug().noquote() << current;
 
   QJsonDocument doc = QJsonDocument::fromJson(current.toUtf8());
   QJsonObject json = doc.object();
@@ -163,14 +168,6 @@ void WeatherKitAPI::parseCurrentConditions(void) {
     currentConditions.condition = conditionCodeMap[c.toString()];
 
     QJsonValue d = w["daylight"];
-
-    #if 0
-    if (d.toBool()) {
-      currentConditions.iconPath = "icons/day/" + iconPathMap[c.toString()];
-    } else {
-      currentConditions.iconPath = "icons/night/" + iconPathMap[c.toString()];
-    }
-    #endif
 
     if (d.toBool()) {
       currentConditions.icon = dayIcons[c.toString()];
@@ -188,11 +185,12 @@ void WeatherKitAPI::parseCurrentConditions(void) {
 
 void WeatherKitAPI::parseCurrentForecast(void) {
 
-  qDebug() << "Parse current forecast"; 
-
   QDateTime now = QDateTime().currentDateTime();
 
   QString forecast(fcastDownloader->downloadedData());
+
+  qDebug() << "Parse current forecast"; 
+  qDebug().noquote() << forecast;
 
   QJsonDocument doc = QJsonDocument::fromJson(forecast.toUtf8());
   QJsonObject json = doc.object();
@@ -215,8 +213,6 @@ void WeatherKitAPI::parseCurrentForecast(void) {
 
           QJsonValue dt = f["forecastStart"];
           QDateTime qdt = QDateTime::fromString(dt.toString(), "yyyy-MM-ddTHH:mm:ssZ");
-
-          //qDebug() << qdt;
 
           // Is the forecast for today?
           if (qdt.date() == now.date()) {
