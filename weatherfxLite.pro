@@ -9,7 +9,7 @@ QT += widgets network
 
 # Input
 FORMS   += weatherFxLite.ui
-HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h
+HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h config.h
 SOURCES += WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp
 
 # Output
