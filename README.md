@@ -19,6 +19,11 @@ Either way, I was mildly griefstricken when it dawned on me that the end had com
 
 For what it's worth, I'm not the only one traumatized by the demise of the WeatherFX.  On jillcataldo.com there are over 400 comments and [counting](https://jillcataldo.com/happy-new-year-is-your-weather-center-discontinuing-itself/) of those who are mourning their beloved WeatherFX.
 
+**2022-10-08 Update**
+
+Around September 7, 2022, individuals across the country began reporting their WeatherFX units had come back to life.  Indeed, mine did as well.  Occasionally the clock will be behind an hour and the current temperature will be wildly incorrect, so I think we'll keep working on this project!
+
+
 ## Hardware
 
 If you're only interested in running the application on your desktop there's no additional hardware required.  WeatherFXLite is _not_ designed to work with your own sensors and requires no special hardware other than something with an Internet connection.
