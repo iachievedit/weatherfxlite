@@ -52,14 +52,14 @@ Additional icons and tightening up the display!
 ## Configure and Build
 ### Configuration
 
-WeatherFXLite uses the REST API for Apple's [WeatherKit](https://developer.apple.com/weatherkit/).  To use WeatherKit and build this project you'll need an Apple Developer Account.  See our [tutorial](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/) for details on obtaining a private and public key.
+WeatherFXLite uses the REST API for Apple's [WeatherKit](https://developer.apple.com/weatherkit/).  To use WeatherKit and build this project you'll need an Apple Developer Account.  See our [tutorial](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/) for details on obtaining a private and public key.  For what it's worth,  I started developing WeatherFXLite with the free version of [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5 but the current conditions for my area (North Texas) were frequently incorrect.  Rather than paying for yet another service (like AccuWeather), I went with utilizing the WeatherKit credits (500,000 API calls per month) in my Apple Developer account.
 
 Once you have your key and Apple Developer account information, create `config.h`:
 
 ```
 // WeatherKit
 // LATLNG is LAT/LNG for your location
-#define LATLNG "32.7767/-96.7970"
+#define LATLNG "32.7767/-96.7970" // Dallas, TX
 
 // Your Apple Developer Information
 #define APPLE_DEVELOPER_TEAM_ID "5367BG94QP"
@@ -70,9 +70,16 @@ Once you have your key and Apple Developer account information, create `config.h
 
 **NOTE**:  Your Apple Developer team ID, key ID, etc. will be unique for you.  The values should not be copy/pasted blindly!
 
-Now
+Now, for the WeatherKit keys, in `config.h` define `WEATHERKIT_PUBKEY` and `WEATHERKIT_PRIVKEY` as C++ raw strings:
 
-For what it's worth,  I started developing WeatherFXLite with the free version of [OpenWeatherMap](https://openweathermap.org/api) REST API 2.5 but the current conditions for my area (North Texas) were frequently incorrect.  Rather than paying for yet another service (like AccuWeather), I went with utilizing the WeatherKit credits (500,000 API calls per month) in my Apple Developer account.
+```
+#define WEATHERKIT_PUBKEY R"(-----BEGIN PUBLIC KEY-----
+-----END PUBLIC KEY-----)"
+
+#define WEATHERKIT_PRIVKEY R"(-----BEGIN PRIVATE KEY-----
+-----END PRIVATE KEY-----)"
+```
+
 
 ### macOS
 
@@ -109,13 +116,16 @@ To run the application from the command line:
 To build on Debian/Ubuntu Linux, and preferably the Raspberry Pi with an appropriate external display:
 
 ```
-sudo apt-get install qtbase5-dev libssl-dev
+sudo apt-get install qtbase5-dev libssl-dev clang
 ```
+
+Yes, we installed the [clang]() compiler.  Here's [why](https://gcc.gnu.org/pipermail/gcc-patches/2022-June/596820.html).
 
 Then:
 
 ```
-qmake INCLUDEPATH+="/usr/include/openssl" \
+qmake QMAKE_CXX="clang++" QMAKE_LINK="clang++" \
+      INCLUDEPATH+="/usr/include/openssl" \
       LIBS+="-L/usr/lib/openssl -lcrypto"
 make
 ```
@@ -127,6 +137,10 @@ xset s off
 xset s noblank
 xset -dpms
 ```
+
+### build.sh
+
+`build.sh` aims to streamline and autodetect what platform you're on.  It's not quite finished.
 
 #### Raspberry Pi Imager
 
