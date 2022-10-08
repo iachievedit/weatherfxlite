@@ -32,6 +32,7 @@ WeatherFXLite::WeatherFXLite() {
   #ifdef Q_OS_LINUX
 
   window->setWindowFlags(Qt::FramelessWindowHint);
+  window->setWindowState(Qt::WindowFullScreen);
   QRect screenRect = QApplication::desktop()->screenGeometry(1);
   window->move(QPoint(screenRect.x(), screenRect.y()));
 
