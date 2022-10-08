@@ -245,13 +245,8 @@ CurrentConditions WeatherKitAPI::getCurrentForecast(void) {
 std::string WeatherKitAPI::makeJWT(void) {
 
   // Compile key directly into binary
-  const char* priv_key(
-  #include "weatherkit/priv.key"
-  );
-
-  const char* pub_key = (
-  #include "weatherkit/pub.key"
-  );
+  const char* priv_key = WEATHERKIT_PRIVKEY;
+  const char* pub_key = WEATHERKIT_PUBKEY;
 
   // Load key from file
 #if 0

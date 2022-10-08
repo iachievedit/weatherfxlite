@@ -6,5 +6,4 @@ moc_*
 Makefile
 ui_*
 config.h
-priv.key
-weatherkit
+*.key
