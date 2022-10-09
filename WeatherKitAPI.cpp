@@ -82,21 +82,22 @@ static std::map<QString, QString> conditionCodeMap = {
 };
 
 static std::map<QString, WeatherIcon> nightIcons = {
-  {"Clear",       {icons_night_Clear_png,       icons_night_Clear_png_len}},
-  {"MostlyClear", {icons_night_MostlyClear_png, icons_night_MostlyClear_png_len}},
-  {"Snow",        {icons_night_Snow_png,        icons_night_Snow_png_len}},
-  {"Cloudy",      {icons_night_Cloudy_png,      icons_night_Cloudy_png_len}},
-  {"MostlyCloudy",{icons_night_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
+  {"Clear",       {night_Clear_png,       night_Clear_png_len}},
+  {"MostlyClear", {night_MostlyClear_png, night_MostlyClear_png_len}},
+  {"Snow",        {night_Snow_png,        night_Snow_png_len}},
+  {"Cloudy",      {night_Cloudy_png,      night_Cloudy_png_len}},
+  {"MostlyCloudy",{night_MostlyCloudy_png, night_MostlyCloudy_png_len}},
+  {"PartlyCloudy", {night_PartlyCloudy_png, night_PartlyCloudy_png_len}},
 };
 
 static std::map<QString, WeatherIcon> dayIcons = {
-  {"Clear",         {icons_day_Clear_png,icons_day_Clear_png_len}},
-  {"MostlyClear",   {icons_day_Clear_png, icons_day_Clear_png_len}},
-  {"MostlyCloudy",  {icons_day_MostlyCloudy_png, icons_day_MostlyCloudy_png_len}},
-  {"PartlyCloudy",  {icons_day_PartlyCloudy_png, icons_day_PartlyCloudy_png_len}},
-  {"Rain",          {icons_day_Rain_png, icons_day_Rain_png_len}},
-  {"Thunderstorms", {icons_day_Thunderstorms_png, icons_day_Thunderstorms_png_len}},
-  {"Cloudy",        {icons_day_Cloudy_png, icons_day_Cloudy_png_len}}
+  {"Clear",         {day_Clear_png, day_Clear_png_len}},
+  {"MostlyClear",   {day_Clear_png, day_Clear_png_len}},
+  {"MostlyCloudy",  {day_MostlyCloudy_png, day_MostlyCloudy_png_len}},
+  {"PartlyCloudy",  {day_PartlyCloudy_png, day_PartlyCloudy_png_len}},
+  {"Rain",          {day_Rain_png, day_Rain_png_len}},
+  {"Thunderstorms", {day_Thunderstorms_png, day_Thunderstorms_png_len}},
+  {"Cloudy",        {day_Cloudy_png, day_Cloudy_png_len}}
 };
 
 // Constructor
