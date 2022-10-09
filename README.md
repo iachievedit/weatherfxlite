@@ -149,3 +149,9 @@ If you are just starting out with a blank SD card for your Raspberry Pi, we reco
 # Legal
 
 This code is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).  Why?  Because we are using the open source license of [Qt](https://www.qt.io/licensing/).
+
+Additional dependencies and their licenses:
+
+* [jwt-cpp](https://github.com/Thalhammer/jwt-cpp) - [MIT License](https://choosealicense.com/licenses/mit/)
+* [picojson](https://github.com/kazuho/picojson) - [2-Clause BSD](https://choosealicense.com/licenses/bsd-2-clause/)
+* [json.hpp](https://github.com/nlohmann/json) - [MIT License](https://choosealicense.com/licenses/mit/)
