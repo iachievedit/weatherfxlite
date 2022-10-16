@@ -144,7 +144,9 @@ xset -dpms
 
 #### Raspberry Pi Imager
 
-If you are just starting out with a blank SD card for your Raspberry Pi, we recommend the official [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and the 64-bit Raspberry Pi OS.
+If you are just starting out with a blank SD card for your Raspberry Pi, we recommend the official [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+
+For Pi 4s, use the 64-bit Raspberry Pi OS.  For Pi 3s, use the 32-bit Raspberry Pi OS.
 
 # Legal
 
