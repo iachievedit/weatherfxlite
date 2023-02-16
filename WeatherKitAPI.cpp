@@ -92,6 +92,7 @@ static std::map<QString, WeatherIcon> nightIcons = {
   {"Thunderstorms",         {night_Thunderstorms_png, night_Thunderstorms_png_len}},
   {"Breezy",        {night_Breezy_png, night_Breezy_png_len}},
   {"Drizzle",       {night_Drizzle_png, night_Drizzle_png_len}},
+  {"Windy",         {night_Windy_png, night_Windy_png_len}}
 };
 
 static std::map<QString, WeatherIcon> dayIcons = {
