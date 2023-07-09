@@ -22,5 +22,8 @@ unsigned char day_Clear_png[] = {
 unsigned int day_Clear_png_len = 4354;
 ```
 
+Creating all of the icons at once:
 
-
+```
+make
+```
