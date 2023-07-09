@@ -103,6 +103,7 @@ static std::map<QString, WeatherIcon> dayIcons = {
   {"Rain",          {day_Rain_png, day_Rain_png_len}},
   {"HeavyRain",          {day_HeavyRain_png, day_HeavyRain_png_len}},
   {"Thunderstorms", {day_Thunderstorms_png, day_Thunderstorms_png_len}},
+  {"IsolatedThunderstorms", {day_IsolatedThunderstorms_png, day_IsolatedThunderstorms_png_len}},
   {"Cloudy",        {day_Cloudy_png, day_Cloudy_png_len}},
   {"Drizzle",       {day_Drizzle_png, day_Drizzle_png_len}},
   {"Breezy",        {day_Breezy_png, day_Breezy_png_len}},
