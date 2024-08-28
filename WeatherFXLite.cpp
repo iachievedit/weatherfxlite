@@ -126,6 +126,12 @@ const std::string backgrounds[] = {
 /// @param temp 
 /// @return 
 std::string WeatherFXLite::backgroundForTemperature(short temp) {
+
+#ifdef CELSIUS
+  // Convert to Fahrenheit before indexing
+  temp = floor((temp * 9.0) / 5.0 + 32);
+#endif
+
   int tIndex = temp/10;
   if (tIndex <= 0) tIndex = 0;
   if (tIndex >= 9) tIndex = 9;

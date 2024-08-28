@@ -14,7 +14,6 @@ FileDownloader::FileDownloader(QUrl url, QObject* parent, RequestHeaders* header
 
   if (headers) {
     for (auto h = headers->begin(); h != headers->end(); h++) {
-      //qDebug() << (*h).second;
       request.setRawHeader((*h).first, (*h).second);
     }
   }

@@ -82,17 +82,17 @@ static std::map<QString, QString> conditionCodeMap = {
 };
 
 static std::map<QString, WeatherIcon> nightIcons = {
-  {"Clear",       {night_Clear_png,       night_Clear_png_len}},
-  {"MostlyClear", {night_MostlyClear_png, night_MostlyClear_png_len}},
-  {"Snow",        {night_Snow_png,        night_Snow_png_len}},
-  {"Cloudy",      {night_Cloudy_png,      night_Cloudy_png_len}},
-  {"MostlyCloudy",{night_MostlyCloudy_png, night_MostlyCloudy_png_len}},
-  {"PartlyCloudy", {night_PartlyCloudy_png, night_PartlyCloudy_png_len}},
-  {"Rain",         {night_Rain_png, night_Rain_png_len}},
-  {"Thunderstorms",         {night_Thunderstorms_png, night_Thunderstorms_png_len}},
-  {"Breezy",        {night_Breezy_png, night_Breezy_png_len}},
-  {"Drizzle",       {night_Drizzle_png, night_Drizzle_png_len}},
-  {"Windy",         {night_Windy_png, night_Windy_png_len}}
+  {"Clear",         {night_Clear_png,         night_Clear_png_len}},
+  {"MostlyClear",   {night_MostlyClear_png,   night_MostlyClear_png_len}},
+  {"Snow",          {night_Snow_png,          night_Snow_png_len}},
+  {"Cloudy",        {night_Cloudy_png,        night_Cloudy_png_len}},
+  {"MostlyCloudy",  {night_MostlyCloudy_png,  night_MostlyCloudy_png_len}},
+  {"PartlyCloudy",  {night_PartlyCloudy_png,  night_PartlyCloudy_png_len}},
+  {"Rain",          {night_Rain_png,          night_Rain_png_len}},
+  {"Thunderstorms", {night_Thunderstorms_png, night_Thunderstorms_png_len}},
+  {"Breezy",        {night_Breezy_png,        night_Breezy_png_len}},
+  {"Drizzle",       {night_Drizzle_png,       night_Drizzle_png_len}},
+  {"Windy",         {night_Windy_png,         night_Windy_png_len}}
 };
 
 static std::map<QString, WeatherIcon> dayIcons = {
@@ -133,7 +133,8 @@ void WeatherKitAPI::updateCurrentConditions(void) {
   QUrl current(url);
 
   RequestHeaders headers;
-  headers.append(qMakePair(QByteArray("Authorization"), QByteArray("Bearer " + bearer.toUtf8())));
+  headers.append(qMakePair(QByteArray("Authorization"),
+                           QByteArray("Bearer " + bearer.toUtf8())));
 
   fDownloader = new FileDownloader(current, this, &headers);
 
@@ -154,7 +155,8 @@ void WeatherKitAPI::updateCurrentForecast(void) {
   QUrl current(url);
 
   RequestHeaders headers;
-  headers.append(qMakePair(QByteArray("Authorization"), QByteArray("Bearer " + bearer.toUtf8())));
+  headers.append(qMakePair(QByteArray("Authorization"),
+                           QByteArray("Bearer " + bearer.toUtf8())));
 
   fcastDownloader = new FileDownloader(current, this, &headers);
 
@@ -173,9 +175,14 @@ void WeatherKitAPI::parseCurrentConditions(void) {
 
   if (json.contains("currentWeather")) {
     QJsonObject w = json["currentWeather"].toObject();
-    QJsonValue t = w["temperature"];
+    QJsonValue  t = w["temperature"];
 
+#ifdef CELSIUS
+    currentConditions.temperature = t.toDouble();
+#else
     currentConditions.temperature = floor((t.toDouble() * 9.0) / 5.0 + 32); // Celsius to Fahrenheit
+#endif
+
 
     QJsonValue c = w["conditionCode"];
 
@@ -219,8 +226,6 @@ void WeatherKitAPI::parseCurrentForecast(void) {
 
       for (auto i = forecasts.begin(); i != forecasts.end(); i++) {
 
-        //qDebug() << (*i);
-
         QJsonObject f = QJsonValue(*i).toObject();
 
         if (f.contains("forecastStart")) {
@@ -231,8 +236,13 @@ void WeatherKitAPI::parseCurrentForecast(void) {
           // Is the forecast for today?
           if (qdt.date() == now.date()) {
 
+#ifdef CELSIUS
+            double hi = f["temperatureMax"].toDouble();
+            double lo = f["temperatureMin"].toDouble();
+#else
             double hi = floor((f["temperatureMax"].toDouble()  * 9.0) / 5.0 + 32);
             double lo = floor((f["temperatureMin"].toDouble() * 9.0) / 5.0 + 32);
+#endif
 
             currentConditions.low = lo;
             currentConditions.high = hi;
