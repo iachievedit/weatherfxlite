@@ -2,6 +2,9 @@ TEMPLATE = app
 TARGET = weatherfxLite
 INCLUDEPATH += . include 
 
+# Uncomment the following line to use the Celsius scale
+# DEFINES += CELSIUS
+
 #INCLUDEPATH += /opt/homebrew/opt/openssl@3/include
 #LIBS += -L/opt/homebrew/opt/openssl@3/lib -lcrypto
 
