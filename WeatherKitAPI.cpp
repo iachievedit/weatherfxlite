@@ -174,14 +174,24 @@ void WeatherKitAPI::parseCurrentConditions(void) {
   QJsonObject json = doc.object();
 
   if (json.contains("currentWeather")) {
+
     QJsonObject w = json["currentWeather"].toObject();
     QJsonValue  t = w["temperature"];
+    QJsonValue ws = w["windSpeed"];
+    QJsonValue wd = w["windDirection"];
 
+    qDebug() << "windSpeed: "     << ws;
+    qDebug() << "windDirection: " << wd;
+
+    // Conversions
 #ifdef CELSIUS
     currentConditions.temperature = t.toDouble();
 #else
     currentConditions.temperature = floor((t.toDouble() * 9.0) / 5.0 + 32); // Celsius to Fahrenheit
 #endif
+
+    currentConditions.windSpeed     = round(ws.toDouble());
+    currentConditions.windDirection = round(wd.toDouble());
 
 
     QJsonValue c = w["conditionCode"];
@@ -210,8 +220,8 @@ void WeatherKitAPI::parseCurrentForecast(void) {
 
   QString forecast(fcastDownloader->downloadedData());
 
-  qDebug() << "Parse current forecast"; 
-  qDebug().noquote() << forecast;
+  //qDebug() << "Parse current forecast"; 
+  //qDebug().noquote() << forecast;
 
   QJsonDocument doc = QJsonDocument::fromJson(forecast.toUtf8());
   QJsonObject json = doc.object();

@@ -55,9 +55,16 @@ WeatherFXLite::WeatherFXLite() {
 }
 
 void WeatherFXLite::updateWeatherDisplay(void) {
+
   CurrentConditions current = weatherAPI->getCurrentConditions();
+
   ui.currentCondition->setText(current.condition);
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
+
+  ui.windSpeed->setText(QString::number(current.windSpeed));
+  ui.windDirection->setText(QString::number(current.windDirection) + QString("°"));
+
+
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
 

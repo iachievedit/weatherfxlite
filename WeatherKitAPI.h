@@ -34,9 +34,14 @@ typedef struct CurrentConditions {
   QString condition;
   QString iconPath;
   WeatherIcon icon;
+  
   int temperature;
   int low = INT_MAX;
   int high = INT_MIN;
+
+  int windSpeed     = 0;
+  int windDirection = 0;
+
 } CurrentConditions;
 
 class WeatherKitAPI : public QObject {
