@@ -24,4 +24,6 @@ esac
 
 qmake QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
       INCLUDEPATH+="$OPENSSL_PREFIX/include" LIBS+="-L$OPENSSL_PREFIX/lib -lcrypto"
-make -j4
+
+NUM_PROCESSORS=$(getconf _NPROCESSORS_ONLN)
+make -j"$NUM_PROCESSORS"

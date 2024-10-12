@@ -1,7 +1,7 @@
 /*
     weatherfxlite
     A lite replacement for the venerable Bushnell WeatherFX station. RIP.
-    Copyright (C) 2022 iAchieved.it LLC
+    Copyright (C) 2024 iAchieved.it LLC
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include <math.h>
 #include "WeatherFXLite.h"
+#include "config.h"
 
 #define CURRENT_CONDITION_TICKS 60
 #define CURRENT_FORECAST_TICKS 60
@@ -29,19 +31,20 @@ WeatherFXLite::WeatherFXLite() {
 
   window->setStyleSheet("background-color:black;");
 
-  #ifdef Q_OS_LINUX
+#ifdef METRIC
+  ui.windUnits->setText("kph");
+#endif
 
+#ifdef Q_OS_LINUX
   window->setWindowFlags(Qt::FramelessWindowHint);
   window->setWindowState(Qt::WindowFullScreen);
   QRect screenRect = QApplication::desktop()->screenGeometry(1);
   window->move(QPoint(screenRect.x(), screenRect.y()));
-
-  #endif
-
+#endif
 
   window->show();
 
-  // Use WeatherKit
+  // Use the Apple WeatherKit API
   weatherAPI = new WeatherKitAPI();  
   
   timer = new QTimer(this);
@@ -50,7 +53,7 @@ WeatherFXLite::WeatherFXLite() {
   connect(weatherAPI, SIGNAL(currentForecastUpdate()), this, SLOT(updateForecastDisplay()));
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
-  timer->start(1000);
+  timer->start(1000); // 1 second
 
 }
 
@@ -60,10 +63,8 @@ void WeatherFXLite::updateWeatherDisplay(void) {
 
   ui.currentCondition->setText(current.condition);
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
-
   ui.windSpeed->setText(QString::number(current.windSpeed));
-  ui.windDirection->setText(QString::number(current.windDirection) + QString("°"));
-
+  ui.windArrow->setDirection(current.windDirection);
 
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
@@ -99,7 +100,7 @@ void WeatherFXLite::timerTick(void) {
 
   QDateTime now = QDateTime().currentDateTime();
   QString timeNow = now.toString("h:mm A");
-  QString dateNow = now.toString("MMM dd, yyyy");
+  QString dateNow = now.toString("MMM dd");
   ui.currentTime->setText(timeNow);
   ui.currentDate->setText(dateNow);
 
@@ -134,10 +135,12 @@ const std::string backgrounds[] = {
 /// @return 
 std::string WeatherFXLite::backgroundForTemperature(short temp) {
 
-#ifdef CELSIUS
+#ifdef METRIC
   // Convert to Fahrenheit before indexing
   temp = floor((temp * 9.0) / 5.0 + 32);
 #endif
+
+  qDebug() << "Temperature: " << temp;
 
   int tIndex = temp/10;
   if (tIndex <= 0) tIndex = 0;

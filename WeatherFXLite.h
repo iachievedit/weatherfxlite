@@ -1,7 +1,7 @@
 /*
     weatherfxlite
     A lite replacement for the venerable Bushnell WeatherFX station. RIP.
-    Copyright (C) 2022 iAchieved.it LLC
+    Copyright (C) 2024 iAchieved.it LLC
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

@@ -184,13 +184,17 @@ void WeatherKitAPI::parseCurrentConditions(void) {
     qDebug() << "windDirection: " << wd;
 
     // Conversions
-#ifdef CELSIUS
+#ifdef METRIC
     currentConditions.temperature = t.toDouble();
 #else
     currentConditions.temperature = floor((t.toDouble() * 9.0) / 5.0 + 32); // Celsius to Fahrenheit
 #endif
 
+#ifdef METRIC
     currentConditions.windSpeed     = round(ws.toDouble());
+#else
+    currentConditions.windSpeed     = round(ws.toDouble() * 0.621371); // kph to mph
+#endif
     currentConditions.windDirection = round(wd.toDouble());
 
 
@@ -205,6 +209,11 @@ void WeatherKitAPI::parseCurrentConditions(void) {
     } else {
       currentConditions.icon = nightIcons[c.toString()];
     }
+
+    #ifdef DEBUG_EXTREMES
+      currentConditions.temperature = 120;
+    #endif
+    
 
   }
 
@@ -246,12 +255,17 @@ void WeatherKitAPI::parseCurrentForecast(void) {
           // Is the forecast for today?
           if (qdt.date() == now.date()) {
 
-#ifdef CELSIUS
+#ifdef METRIC
             double hi = f["temperatureMax"].toDouble();
             double lo = f["temperatureMin"].toDouble();
 #else
             double hi = floor((f["temperatureMax"].toDouble()  * 9.0) / 5.0 + 32);
             double lo = floor((f["temperatureMin"].toDouble() * 9.0) / 5.0 + 32);
+#endif
+
+#ifdef DEBUG_EXTREMES
+            hi = 120;
+            lo = 100;
 #endif
 
             currentConditions.low = lo;

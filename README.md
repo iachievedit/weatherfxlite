@@ -23,6 +23,8 @@ For what it's worth, I'm not the only one traumatized by the demise of the Weath
 
 Around September 7, 2022, individuals across the country began reporting their WeatherFX units had come back to life.  Indeed, mine did as well.  Occasionally the clock will be behind an hour and the current temperature will be wildly incorrect, so I think we'll keep working on this project!
 
+**2024-10-12 Update**
+My Bushnell WeatherFX continues to update, though it occasionally goes "offline" for a day or two.
 
 ## Hardware
 
@@ -59,6 +61,7 @@ Once you have your key and Apple Developer account information, create `config.h
 ```
 // WeatherKit
 // LATLNG is LAT/LNG for your location
+// #define METRIC
 #define LATLNG "32.7767/-96.7970" // Dallas, TX
 
 // Your Apple Developer Information
@@ -80,6 +83,8 @@ Now, for the WeatherKit keys, in `config.h` define `WEATHERKIT_PUBKEY` and `WEAT
 -----END PRIVATE KEY-----)"
 ```
 
+> [!NOTE]
+> Add `#define METRIC` to `config.h` if you prefer Celsius and kilometers.
 
 ### macOS
 
