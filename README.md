@@ -86,138 +86,14 @@ Now, for the WeatherKit keys, in `config.h` define `WEATHERKIT_PUBKEY` and `WEAT
 > [!NOTE]
 > Add `#define METRIC` to `config.h` if you prefer Celsius and kilometers.
 
-### macOS
+# Building
 
-To build on macOS:
+* [macOS](macOS.md)
+* [Raspberry Pi](RPi.md)
 
-```
-brew install qt5
-brew install openssl
-```
+# Installing
 
-You may need to update your `PATH`:
-
-```
-export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
-```
-
-Then:
-
-```
-OPENSSL_PREFIX=`brew --prefix openssl`;
-qmake INCLUDEPATH+="$OPENSSL_PREFIX/include" \
-      LIBS+="-L$OPENSSL_PREFIX/lib -lcrypto"
-make
-```
-
-To run the application from the command line:
-
-```
-% build/weatherfxLite.app/Contents/MacOS/weatherfxLite
-```
-
-### Debian/Ubuntu Linux
-
-To build on Debian/Ubuntu Linux, and preferably the Raspberry Pi with an appropriate external display:
-
-```
-sudo apt-get install qtbase5-dev libssl-dev clang
-```
-
-Yes, we installed the [clang]() compiler.  Here's [why](https://gcc.gnu.org/pipermail/gcc-patches/2022-June/596820.html).
-
-Then:
-
-```
-qmake QMAKE_CXX="clang++" QMAKE_LINK="clang++" \
-      INCLUDEPATH+="/usr/include/openssl" \
-      LIBS+="-L/usr/lib/openssl -lcrypto"
-make
-```
-
-The default Raspberry Pi OS has all manner of screensaver/energy saver mechanisms running, so let's turn all that off.
-
-```
-xset s off
-xset s noblank
-xset -dpms
-```
-
-### build.sh
-
-`build.sh` aims to streamline and autodetect what platform you're on.  It's not quite finished.
-
-#### Raspberry Pi Imager
-
-If you are just starting out with a blank SD card for your Raspberry Pi, we recommend the official [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
-
-For Pi 4s, use the 64-bit Raspberry Pi OS.  For Pi 3s, use the 32-bit Raspberry Pi OS.
-
-
-#### =================================================================================
-#### Additional instructions to get things running on PI 4 and cleaning up the startup
-
-
-1. Flash SD card with Raspberry Pi OS (64-bit). This can be done either manually or using the Raspberry Pi Imager software (more info is in this page: https://www.raspberrypi.com/software/)
-
-2. Install Hyper pixel 4 software by reading appropriate information from this page for your particular type of display: https://github.com/pimoroni/hyperpixel4. For example, for square display with raspberry PI 4 do this and follow the prompts properly: 
-
-    ```shell
-    curl -sSL get.pimoroni.com/hyperpixel4-legacy | bash
-    ```
-3. Add this line `dtoverlay=vc4-kms-dpi-hyperpixel4sq` to the end of the /boot/config.txt if it is not present already by: 
-
-    ```shell
-    sudo grep -qxF 'dtoverlay=vc4-kms-dpi-hyperpixel4sq' /boot/config.txt || echo 'dtoverlay=vc4-kms-dpi-hyperpixel4sq' | sudo tee -a /boot/config.txt > /dev/null
-    ```
-4. Clean up /boot/cmdline.txt so that it removes `console=tty1` and adds `logo.nologo vt.global_cursor_default=0` to the end of the line
-   ```shell
-   sudo sed -i 's/console=tty1 //; /logo\.nologo vt\.global_cursor_default=0/! s/$/ logo.nologo vt.global_cursor_default=0/' /boot/cmdline.txt
-   ```
-5. Remove the mouse by updating the file `/etc/lightdm/lightdm.conf` to include this line `xserver-command=X -nocursor` under the `[Seat:*]` section by doing:
-    ```shell
-    sudo grep -q -F 'xserver-command=X -nocursor' /etc/lightdm/lightdm.conf || sudo sed -i '/^\[Seat:\*\]$/a xserver-command=X -nocursor' /etc/lightdm/lightdm.conf
-    ```
-    it should look like this:
-
-    `[Seat:*]`
-    
-    `xserver-command=X -nocursor`
-6. Create a lxsession profile to remove the desktop and the panel, Stop it from sleeping etc
-    ```shell
-   mkdir -p ~/.config/lxsession/LXDE-pi && echo -e '@xset s off\n@xset -dpms\n@xset s noblank' > ~/.config/lxsession/LXDE-pi/autostart
-   ```
-
-7. Create a systemd service for the weatherfxlite application like this based on your user/group and call it something like `weatherfxlite.service` (this assumes you have your build/executable at `/usr/local/bin/weatherfxlite`)
-    ```shell
-    sudo tee /etc/systemd/system/weatherfxlite.service > /dev/null <<EOF
-    [Unit]
-    Description = weatherfxlite
-    After = graphical-session.target network-online.target
-    
-    [Service]
-    User = pi
-    Group = pi
-    Type = simple
-    Environment=DISPLAY=:0
-    Environment=XAUTHORITY=/home/pi/.Xauthority
-    WorkingDirectory = /usr/local/bin/
-    ExecStart = /usr/local/bin/weatherfxLite
-    Restart = always
-    RestartSec = 3
-    
-    [Install]
-    WantedBy = multi-user.target
-    EOF
-    ```
-8. Enable and start this service and enjoy a clutter-free weather app 
-    ```shell
-    sudo systemctl daemon-reload
-    sudo systemctl enable weatherfxlite
-    sudo systemctl start weatherfxlite  
-    sudo systemctl status weatherfxlite # check the status 
-    sudo reboot now
-    ```
+* [Raspberry Pi](RPi.md)
 
 # Legal
 

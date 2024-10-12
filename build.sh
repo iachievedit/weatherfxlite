@@ -22,6 +22,12 @@ case "$OSTYPE" in
   *)        echo "unknown: $OSTYPE" ;;
 esac
 
+if [ ! -f config.h ]; then
+  echo "Error:  config.h not found."
+  echo "See README.md for instructions on how to create config.h."
+  exit 1
+fi
+
 qmake QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
       INCLUDEPATH+="$OPENSSL_PREFIX/include" LIBS+="-L$OPENSSL_PREFIX/lib -lcrypto"
 
