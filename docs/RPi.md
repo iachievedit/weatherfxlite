@@ -3,11 +3,33 @@
 These instructions are for Raspberry Pi OS based upon Debian
 Bookworm.
 
+## Imaging
+
+The [Raspberry Pi Imager](https://www.raspberrypi.com/software/) software
+is the easiest way to get started.  
+
+<div align="center">
+<img src="rpi_imager.png">
+</div>
+
+I recommend using the **OS Customization** option to configure your
+hostname, Wi-Fi, timezone, and SSH keys.
+
+
+## Obtaining
+
+SSH into your newly imaged Pi, and
+
+```bash
+git clone https://github.com/iachievedit/weatherfxlite
+```
+
 ## Building
 
 You can run `build.sh` to build everything on the Raspberry Pi.
 
 ```bash
+cd weatherfxlite
 ./build.sh
 ```
 

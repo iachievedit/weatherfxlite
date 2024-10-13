@@ -51,6 +51,14 @@ Additional icons and tightening up the display!
 <img src="docs/weatherfxlite2.jpg">
 </div>
 
+**2024-10-13**
+
+Still hot in North Texas.
+
+<div align="center">
+<img src="docs/weatherfxlite3.jpg">
+</div>
+
 ## Configure and Build
 ### Configuration
 
@@ -88,12 +96,12 @@ Now, for the WeatherKit keys, in `config.h` define `WEATHERKIT_PUBKEY` and `WEAT
 
 # Building
 
-* [macOS](macOS.md)
-* [Raspberry Pi](RPi.md)
+* [macOS](docs/macOS.md)
+* [Raspberry Pi](docs/RPi.md)
 
 # Installing
 
-* [Raspberry Pi](RPi.md)
+* [Raspberry Pi](docs/RPi.md)
 
 # Legal
 
