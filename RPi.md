@@ -11,7 +11,6 @@ You can run `build.sh` to build everything on the Raspberry Pi.
 ./build.sh
 ```
 
-
 ## Installing
 
 To turn your Pi 4 into a WeatherFXLite display, run `pi4_setup.sh`.
