@@ -1,16 +1,19 @@
 TEMPLATE = app
 TARGET = weatherfxLite
 INCLUDEPATH += . include 
+INCLUDEPATH += /opt/homebrew/include
 
 #INCLUDEPATH += /opt/homebrew/opt/openssl@3/include
-#LIBS += -L/opt/homebrew/opt/openssl@3/lib -lcrypto
+LIBS += -L/opt/homebrew/lib
+
+LIBS += -lzmq
 
 QT += widgets network
 
 # Input
 FORMS   += weatherFxLite.ui
-HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h WindArrow.h config.h
-SOURCES += WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp WindArrow.cpp
+HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h WindArrow.h config.h ZmqListener.h
+SOURCES += WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp WindArrow.cpp ZmqListener.cpp
 
 # Output
 DESTDIR = build

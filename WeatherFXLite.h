@@ -49,8 +49,11 @@ Q_OBJECT
   Ui::Form ui;
 
   QGraphicsScene* scene {NULL};
+  QGraphicsScene* gpsScene {NULL};
   QGraphicsView* view {NULL};
+  QGraphicsView* gpsView {NULL};
   QGraphicsPixmapItem* item {NULL};
+  QGraphicsPixmapItem* gpsItem {NULL};
 
   WeatherKitAPI* weatherAPI;
 
@@ -60,11 +63,13 @@ Q_OBJECT
   bool boot {true};
   int currentConditionTicks { 0 };
   int currentForecastTicks { 0 };
+  qint64 lastGPSUpdate {0};
 
   private slots:
   void updateWeatherDisplay();
   void updateForecastDisplay();
   void timerTick();
+  void gpsCoordinatesReceived(const QString& message);
 
 };
 

@@ -37,6 +37,8 @@ git clone https://github.com/iachievedit/weatherfxlite
 
 > [!IMPORTANT]  
 > You must have a suitable `config.h` in place at this point.
+> See [config.h.tmpl](../config.h.tmpl) and [here](https://dev.iachieved.it/iachievedit/weatherkit-rest-api/)
+> for details.
 
 You can run `build.sh` to build everything on the Raspberry Pi.
 If this is the first time running `build.sh` on a new Pi, it is

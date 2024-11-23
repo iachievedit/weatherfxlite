@@ -89,6 +89,7 @@ static std::map<QString, WeatherIcon> nightIcons = {
   {"MostlyCloudy",  {night_MostlyCloudy_png,  night_MostlyCloudy_png_len}},
   {"PartlyCloudy",  {night_PartlyCloudy_png,  night_PartlyCloudy_png_len}},
   {"Rain",          {night_Rain_png,          night_Rain_png_len}},
+  {"HeavyRain",     {night_Rain_png,          night_Rain_png_len}},
   {"Thunderstorms", {night_Thunderstorms_png, night_Thunderstorms_png_len}},
   {"Breezy",        {night_Breezy_png,        night_Breezy_png_len}},
   {"Drizzle",       {night_Drizzle_png,       night_Drizzle_png_len}},
@@ -114,7 +115,7 @@ static std::map<QString, WeatherIcon> dayIcons = {
 };
 
 // Constructor
-WeatherKitAPI::WeatherKitAPI() {
+WeatherKitAPI::WeatherKitAPI() : currentLocation(LATLNG){
 }
 
 // Destructor
@@ -125,7 +126,7 @@ void WeatherKitAPI::updateCurrentConditions(void) {
 
   QString url = WEATHERKIT_API_URL;
   url += "en_US/";
-  url += LATLNG;
+  url += currentLocation;
   url += "?dataSets=currentWeather";
 
   QString bearer(makeJWT().c_str());
@@ -162,6 +163,10 @@ void WeatherKitAPI::updateCurrentForecast(void) {
 
   connect(fcastDownloader, SIGNAL(downloaded()), this, SLOT(parseCurrentForecast()));
 
+}
+
+void WeatherKitAPI::setCurrentLocation(const QString& location) {
+  currentLocation = location;
 }
 
 void WeatherKitAPI::parseCurrentConditions(void) {

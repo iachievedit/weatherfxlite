@@ -20,11 +20,24 @@
 #include <math.h>
 #include "WeatherFXLite.h"
 #include "config.h"
+#include <QThread>
+#include "ZmqListener.h"
+#include "icons/gps_icon.h"
 
 #define CURRENT_CONDITION_TICKS 60
 #define CURRENT_FORECAST_TICKS 60
 
 WeatherFXLite::WeatherFXLite() {
+
+  QString zmqAddress("tcp://localhost:11205");
+  ZmqListener* listener = new ZmqListener(zmqAddress);
+  QThread* thread = new QThread();
+  listener->moveToThread(thread);
+  connect(thread, SIGNAL(started()), listener, SLOT(startListening()));
+  connect(listener,
+          SIGNAL(newMessageReceived(QString)),
+          this,
+          SLOT(gpsCoordinatesReceived(QString)));
 
   window = new QWidget();
   ui.setupUi(window);  
@@ -53,7 +66,32 @@ WeatherFXLite::WeatherFXLite() {
   connect(weatherAPI, SIGNAL(currentForecastUpdate()), this, SLOT(updateForecastDisplay()));
   connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
+  // Set up GPS scene
+  gpsScene = new QGraphicsScene();
+  QPixmap icon;
+  if (icon.loadFromData(gps_png, gps_png_len, "png")) {
+    gpsItem = new QGraphicsPixmapItem(icon);
+    gpsScene->addItem(gpsItem);
+  }
+  ui.gpsAvailable->hide();
+  ui.gpsAvailable->setScene(gpsScene);
+
   timer->start(1000); // 1 second
+  thread->start();
+
+}
+
+
+void WeatherFXLite::gpsCoordinatesReceived(const QString& message) {
+
+  qDebug() << "Received GPS coordinates: " << message;
+
+  lastGPSUpdate = QDateTime().currentDateTime().toSecsSinceEpoch();
+  qDebug() << "Last GPS update: " << lastGPSUpdate;
+
+  weatherAPI->setCurrentLocation(message);
+
+  ui.gpsAvailable->show();
 
 }
 
@@ -69,7 +107,7 @@ void WeatherFXLite::updateWeatherDisplay(void) {
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
 
-  if (scene == NULL) {
+  if (scene == nullptr) {
     scene = new QGraphicsScene();
   }
 
@@ -84,6 +122,12 @@ void WeatherFXLite::updateWeatherDisplay(void) {
     ui.graphicsView->setScene(scene);
   } else {
     qDebug() << "Unable to load icon data";
+  }
+
+  qint64 now = QDateTime().currentDateTime().toSecsSinceEpoch();
+  if (now - lastGPSUpdate > 60) {
+    qDebug() << "GPS data stale";
+    ui.gpsAvailable->hide();
   }
 
 }

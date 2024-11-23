@@ -53,6 +53,7 @@ Q_OBJECT
   public:
   void updateCurrentConditions(void);
   void updateCurrentForecast(void);
+  void setCurrentLocation(const QString& location);
   CurrentConditions getCurrentConditions(void);
   CurrentConditions getCurrentForecast(void);
 
@@ -64,6 +65,7 @@ Q_OBJECT
   FileDownloader* fDownloader;
   FileDownloader* fcastDownloader;
   CurrentConditions currentConditions;
+  QString currentLocation;
   std::string makeJWT();
 
   public slots:
