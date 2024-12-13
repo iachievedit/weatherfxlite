@@ -148,7 +148,7 @@ void WeatherKitAPI::updateCurrentForecast(void) {
   
   QString url = WEATHERKIT_API_URL;
   url += "en_US/";
-  url += LATLNG;
+  url += currentLocation;
   url += "?dataSets=forecastDaily";
 
   QString bearer(makeJWT().c_str());

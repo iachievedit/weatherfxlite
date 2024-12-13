@@ -1,6 +1,5 @@
 #include "ZmqListener.h"
 
-
 ZmqListener::ZmqListener(const QString &address, QObject* parent)
     : QObject(parent), context(1), socket(context, zmq::socket_type::sub) {
     socket.connect(address.toStdString());
@@ -12,13 +11,12 @@ ZmqListener::ZmqListener(const QString &address, QObject* parent)
   }
 
   void ZmqListener::startListening() {
-    printf("Listening for messages\n");
+    printf("Listening for GPS reader messages\n");
     while (true) {
       zmq::message_t message;
       if (socket.recv(message, zmq::recv_flags::none)) {
-        printf("Received message\n");
         QString data = QString::fromStdString(message.to_string());
-        emit newMessageReceived(data);
+        emit gpsMessageReceived(data);
       }
     }
   }

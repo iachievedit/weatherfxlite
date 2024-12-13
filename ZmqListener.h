@@ -33,11 +33,11 @@ signals:
      * Signal emitted when a new message is received.
      * @param message - The message received from the ZMQ socket
      */
-    void newMessageReceived(const QString &message);
+    void gpsMessageReceived(const QString &message);
 
 private:
-    zmq::context_t context;  ///< ZeroMQ context
-    zmq::socket_t socket;    ///< ZeroMQ subscriber socket
+    zmq::context_t context;  
+    zmq::socket_t socket;    
 };
 
 #endif // ZMQLISTENER_H

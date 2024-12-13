@@ -29,16 +29,21 @@
 
 WeatherFXLite::WeatherFXLite() {
 
-  QString zmqAddress("tcp://localhost:11205");
+  // Listen for optional GPS coordinates to be published on ZeroMQ
+  QString zmqAddress("tcp://localhost:11111");
   ZmqListener* listener = new ZmqListener(zmqAddress);
   QThread* thread = new QThread();
   listener->moveToThread(thread);
-  connect(thread, SIGNAL(started()), listener, SLOT(startListening()));
+  connect(thread,
+          SIGNAL(started()),
+          listener,
+          SLOT(startListening()));
   connect(listener,
-          SIGNAL(newMessageReceived(QString)),
+          SIGNAL(gpsMessageReceived(QString)),
           this,
           SLOT(gpsCoordinatesReceived(QString)));
 
+  // Set up the UI
   window = new QWidget();
   ui.setupUi(window);  
 
@@ -77,10 +82,11 @@ WeatherFXLite::WeatherFXLite() {
   ui.gpsAvailable->setScene(gpsScene);
 
   timer->start(1000); // 1 second
+
+  // Start the thread to listen for GPS coordinates
   thread->start();
 
 }
-
 
 void WeatherFXLite::gpsCoordinatesReceived(const QString& message) {
 
