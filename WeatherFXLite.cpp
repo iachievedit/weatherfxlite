@@ -151,7 +151,7 @@ void WeatherFXLite::timerTick(void) {
   QDateTime now = QDateTime().currentDateTime();
 
 #ifdef TWENTYFOUR_HOUR_FORMAT
-  QString timeNow = now.toString("H:mm");
+  QString timeNow = now.toString("HH:mm");
 #else
   QString timeNow = now.toString("h:mm A");
 #endif
