@@ -149,7 +149,13 @@ void WeatherFXLite::timerTick(void) {
   currentConditionTicks++; currentForecastTicks++;
 
   QDateTime now = QDateTime().currentDateTime();
+
+#ifdef TWENTYFOUR_HOUR_FORMAT
+  QString timeNow = now.toString("H:mm");
+#else
   QString timeNow = now.toString("h:mm A");
+#endif
+
   QString dateNow = now.toString("MMM dd");
   ui.currentTime->setText(timeNow);
   ui.currentDate->setText(dateNow);
