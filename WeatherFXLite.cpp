@@ -30,7 +30,7 @@
 WeatherFXLite::WeatherFXLite() {
 
   // Listen for optional GPS coordinates to be published on ZeroMQ
-  QString zmqAddress("tcp://localhost:11111");
+  QString zmqAddress("tcp://localhost:11205");
   ZmqListener* listener = new ZmqListener(zmqAddress);
   QThread* thread = new QThread();
   listener->moveToThread(thread);
