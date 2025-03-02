@@ -11,7 +11,7 @@ LIBS += -lzmq
 QT += widgets network
 
 # Input
-FORMS   += weatherFxLite.ui
+FORMS   += weatherFxLite.ui weatherFxLite_minimal.ui
 HEADERS += WeatherKitAPI.h FileDownloader.h WeatherFXLite.h WindArrow.h config.h ZmqListener.h
 SOURCES += WeatherKitAPI.cpp main.cpp FileDownloader.cpp WeatherFXLite.cpp WindArrow.cpp ZmqListener.cpp
 

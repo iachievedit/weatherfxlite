@@ -50,7 +50,9 @@ WeatherFXLite::WeatherFXLite() {
   window->setStyleSheet("background-color:black;");
 
 #ifdef METRIC
-  ui.windUnits->setText("kph");
+  #ifndef MINIMAL_UI
+    ui.windUnits->setText("kph");
+  #endif
 #endif
 
 #ifdef Q_OS_LINUX
@@ -105,10 +107,15 @@ void WeatherFXLite::updateWeatherDisplay(void) {
 
   CurrentConditions current = weatherAPI->getCurrentConditions();
 
-  ui.currentCondition->setText(current.condition);
+  #ifndef MINIMAL_UI
+    ui.currentCondition->setText(current.condition);
+  #endif
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
-  ui.windSpeed->setText(QString::number(current.windSpeed));
-  ui.windArrow->setDirection(current.windDirection);
+
+  #ifndef MINIMAL_UI
+    ui.windSpeed->setText(QString::number(current.windSpeed));
+    ui.windArrow->setDirection(current.windDirection);
+  #endif
 
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
   window->setStyleSheet(background.c_str());
@@ -140,8 +147,11 @@ void WeatherFXLite::updateWeatherDisplay(void) {
 
 void WeatherFXLite::updateForecastDisplay(void) {
   CurrentConditions current = weatherAPI->getCurrentConditions();
-  ui.hiTemp->setText(QString::number(current.high) + QString("°"));
-  ui.loTemp->setText(QString::number(current.low) +  QString("°"));
+
+  #ifndef MINIMAL_UI
+    ui.hiTemp->setText(QString::number(current.high) + QString("°"));
+    ui.loTemp->setText(QString::number(current.low) +  QString("°"));
+  #endif
 }
 
 void WeatherFXLite::timerTick(void) {

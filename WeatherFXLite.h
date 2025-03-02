@@ -20,22 +20,24 @@
 #ifndef __WEATHERFXLITE_H__
 #define __WEATHERFXLITE_H__
 
+#include "config.h"
+
 #include <QWidget>
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 
-
-//#include <OpenWeatherAPI.h>
-
 #include <WeatherKitAPI.h>
 
 #ifdef Q_OS_LINUX
   #include <QDesktopWidget>
-  #include "ui_weatherfxLite.h"
+#endif
+
+#ifdef MINIMAL_UI
+  #include "ui_weatherFxLite_minimal.h"
 #else
-#include "ui_weatherFxLite.h"
+  #include "ui_weatherFxLite.h"
 #endif
 
 class WeatherFXLite : public QObject {
