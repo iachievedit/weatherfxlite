@@ -35,9 +35,9 @@
 #endif
 
 #ifdef MINIMAL_UI
-  #include "ui_weatherFxLite_minimal.h"
+  #include "ui_weatherfxLite_minimal.h"
 #else
-  #include "ui_weatherFxLite.h"
+  #include "ui_weatherfxLite.h"
 #endif
 
 class WeatherFXLite : public QObject {

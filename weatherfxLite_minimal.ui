@@ -90,8 +90,8 @@
         <widget class="QLabel" name="currentDate">
          <property name="font">
           <font>
-           <family>Gill Sans</family>
-           <pointsize>96</pointsize>
+           <!-- <family>Gill Sans</family> -->
+           <pointsize>54</pointsize>
            <kerning>true</kerning>
           </font>
          </property>
@@ -126,8 +126,8 @@
          </property>
          <property name="font">
           <font>
-           <family>Gill Sans</family>
-           <pointsize>96</pointsize>
+           <!--<family>Gill Sans</family>-->
+           <pointsize>54</pointsize>
            <kerning>true</kerning>
           </font>
          </property>
@@ -169,8 +169,8 @@
         <widget class="QLabel" name="currentTemperature">
          <property name="font">
           <font>
-           <family>Gill Sans</family>
-           <pointsize>288</pointsize>
+           <!--<family>Gill Sans</family>-->
+           <pointsize>200</pointsize>
           </font>
          </property>
          <property name="text">

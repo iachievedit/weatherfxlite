@@ -166,9 +166,15 @@ void WeatherFXLite::timerTick(void) {
   QString timeNow = now.toString("h:mm A");
 #endif
 
+#ifndef MINIMAL_UI
   QString dateNow = now.toString("MMM dd");
   ui.currentTime->setText(timeNow);
   ui.currentDate->setText(dateNow);
+#else
+  QString dateNow = now.toString("MMM d, h:mm A");
+  ui.currentTime->setText(dateNow);
+  ui.currentDate->setText("");
+#endif
 
   if (currentForecastTicks % CURRENT_FORECAST_TICKS == 0 || boot) {
     weatherAPI->updateCurrentForecast();
