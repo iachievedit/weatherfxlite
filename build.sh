@@ -13,7 +13,7 @@ case "$OSTYPE" in
 
   linux*)   echo "Build for Linux";
   OPENSSL_PREFIX="/usr/include";
-  sudo apt-get install -y qtbase5-dev libssl-dev clang
+  sudo apt-get install -y qtbase5-dev libssl-dev clang libzmq3-dev
 
   ;;
   bsd*)     echo "BSD" ;;
