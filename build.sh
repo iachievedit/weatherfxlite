@@ -28,7 +28,7 @@ if [ ! -f config.h ]; then
   exit 1
 fi
 
-qmake QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
+qmake weatherfxLite.pro QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
       INCLUDEPATH+="$OPENSSL_PREFIX/include" LIBS+="-L$OPENSSL_PREFIX/lib -lcrypto"
 
 NUM_PROCESSORS=$(getconf _NPROCESSORS_ONLN)

@@ -45,7 +45,14 @@ WeatherFXLite::WeatherFXLite() {
 
   // Set up the UI
   window = new QWidget();
-  ui.setupUi(window);  
+  ui.setupUi(window);
+
+  // Pin the condition label to its 60pt height so font auto-shrinking doesn't reflow the layout
+  {
+    QFont f = ui.currentCondition->font();
+    f.setPointSize(60);
+    ui.currentCondition->setFixedHeight(QFontMetrics(f).height());
+  }
 
   window->setStyleSheet("background-color:black;");
 
@@ -106,6 +113,16 @@ void WeatherFXLite::updateWeatherDisplay(void) {
   CurrentConditions current = weatherAPI->getCurrentConditions();
 
   ui.currentCondition->setText(current.condition);
+  {
+    QFont f = ui.currentCondition->font();
+    f.setPointSize(60);
+    QFontMetrics fm(f);
+    while (fm.horizontalAdvance(current.condition) > ui.currentCondition->width() && f.pointSize() > 20) {
+      f.setPointSize(f.pointSize() - 1);
+      fm = QFontMetrics(f);
+    }
+    ui.currentCondition->setFont(f);
+  }
   ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
   ui.windSpeed->setText(QString::number(current.windSpeed));
   ui.windArrow->setDirection(current.windDirection);

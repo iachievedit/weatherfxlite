@@ -7,3 +7,6 @@ Makefile
 ui_*
 config.h
 *.key
+*.o
+*.moc
+conditiontest.app/
