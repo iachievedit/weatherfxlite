@@ -22,13 +22,19 @@ case "$OSTYPE" in
   *)        echo "unknown: $OSTYPE" ;;
 esac
 
-if [ ! -f config.h ]; then
-  echo "Error:  config.h not found."
-  echo "See README.md for instructions on how to create config.h."
-  exit 1
+if [ "$1" = "--test" ]; then
+  PRO_FILE="conditiontest.pro"
+  echo "Building conditiontest"
+else
+  PRO_FILE="weatherfxLite.pro"
+  if [ ! -f config.h ]; then
+    echo "Error:  config.h not found."
+    echo "See README.md for instructions on how to create config.h."
+    exit 1
+  fi
 fi
 
-qmake weatherfxLite.pro QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
+qmake "$PRO_FILE" QMAKE_CXX="$QMAKE_CXX" QMAKE_LINK="$QMAKE_LINK" \
       INCLUDEPATH+="$OPENSSL_PREFIX/include" LIBS+="-L$OPENSSL_PREFIX/lib -lcrypto"
 
 NUM_PROCESSORS=$(getconf _NPROCESSORS_ONLN)

@@ -1,0 +1,10 @@
+[Unit]
+Description=WeatherFXLite FOTA update check
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/weatherfxlite-update.sh
+StandardOutput=journal
+StandardError=journal

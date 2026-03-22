@@ -42,6 +42,9 @@ typedef struct CurrentConditions {
   int windSpeed     = 0;
   int windDirection = 0;
 
+  int precipitationChance = 0; // 0-100 percent
+  WeatherIcon precipWeatherIcon = {nullptr, 0};
+
 } CurrentConditions;
 
 class WeatherKitAPI : public QObject {

@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = weatherfxLite
+macx: QMAKE_MACOSX_DEPLOYMENT_TARGET = $$system(sw_vers -productVersion)
 INCLUDEPATH += . include 
 INCLUDEPATH += /opt/homebrew/include
 

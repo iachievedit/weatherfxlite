@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm .qmake.stash
-make clean
+rm -f .qmake.stash Makefile
+rm -rf build/

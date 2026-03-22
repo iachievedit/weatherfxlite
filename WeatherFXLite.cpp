@@ -24,6 +24,7 @@
 #include "ZmqListener.h"
 #include "icons/gps_icon.h"
 
+
 #define CURRENT_CONDITION_TICKS 60
 #define CURRENT_FORECAST_TICKS 60
 
@@ -54,6 +55,20 @@ WeatherFXLite::WeatherFXLite() {
     ui.currentCondition->setFixedHeight(QFontMetrics(f).height());
   }
 
+  // Pin the temperature label to the widest 2-digit width so 3-digit values trigger auto-shrinking
+  {
+    QFont f = ui.currentTemperature->font();
+    f.setPointSize(114);
+    ui.currentTemperature->setFixedWidth(QFontMetrics(f).horizontalAdvance("99°"));
+  }
+
+  // Pin the wind speed label to the widest 2-digit width so 3-digit values trigger auto-shrinking
+  {
+    QFont f = ui.windSpeed->font();
+    f.setPointSize(36);
+    ui.windSpeed->setFixedWidth(QFontMetrics(f).horizontalAdvance("99"));
+  }
+
   window->setStyleSheet("background-color:black;");
 
 #ifdef METRIC
@@ -66,6 +81,8 @@ WeatherFXLite::WeatherFXLite() {
   QRect screenRect = QApplication::desktop()->screenGeometry(1);
   window->move(QPoint(screenRect.x(), screenRect.y()));
 #endif
+
+  ui.versionLabel->setText("v1.0.2");
 
   window->show();
 
@@ -123,8 +140,30 @@ void WeatherFXLite::updateWeatherDisplay(void) {
     }
     ui.currentCondition->setFont(f);
   }
-  ui.currentTemperature->setText(QString::number(current.temperature) + QString("°"));
-  ui.windSpeed->setText(QString::number(current.windSpeed));
+  {
+    QString tempText = QString::number(current.temperature) + QString("°");
+    ui.currentTemperature->setText(tempText);
+    QFont f = ui.currentTemperature->font();
+    f.setPointSize(114);
+    QFontMetrics fm(f);
+    while (fm.horizontalAdvance(tempText) > ui.currentTemperature->width() && f.pointSize() > 60) {
+      f.setPointSize(f.pointSize() - 1);
+      fm = QFontMetrics(f);
+    }
+    ui.currentTemperature->setFont(f);
+  }
+  {
+    QString speedText = QString::number(current.windSpeed);
+    ui.windSpeed->setText(speedText);
+    QFont f = ui.windSpeed->font();
+    f.setPointSize(36);
+    QFontMetrics fm(f);
+    while (fm.horizontalAdvance(speedText) > ui.windSpeed->width() && f.pointSize() > 18) {
+      f.setPointSize(f.pointSize() - 1);
+      fm = QFontMetrics(f);
+    }
+    ui.windSpeed->setFont(f);
+  }
   ui.windArrow->setDirection(current.windDirection);
 
   std::string background = "background-color:" + backgroundForTemperature(current.temperature) + ";";
@@ -159,6 +198,12 @@ void WeatherFXLite::updateForecastDisplay(void) {
   CurrentConditions current = weatherAPI->getCurrentConditions();
   ui.hiTemp->setText(QString::number(current.high) + QString("°"));
   ui.loTemp->setText(QString::number(current.low) +  QString("°"));
+  ui.precipChance->setText(QString::number(current.precipitationChance) + "%");
+  if (current.precipWeatherIcon.data) {
+    QPixmap px;
+    px.loadFromData(current.precipWeatherIcon.data, current.precipWeatherIcon.len, "png");
+    ui.precipIcon->setPixmap(px.scaled(48, 48, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+  }
 }
 
 void WeatherFXLite::timerTick(void) {

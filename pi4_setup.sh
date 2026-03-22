@@ -57,10 +57,22 @@ popd
 sudo apt-get install -y crudini
 crudini --set ~/.config/wayfire.ini core plugins hide-cursor
 
+# Install FOTA updater
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+sudo cp "$SCRIPT_DIR/fota/weatherfxlite-update.sh" /usr/local/bin/weatherfxlite-update.sh
+sudo chmod +x /usr/local/bin/weatherfxlite-update.sh
+sudo cp "$SCRIPT_DIR/fota/weatherfxlite-update.service" /etc/systemd/system/
+sudo cp "$SCRIPT_DIR/fota/weatherfxlite-update.timer" /etc/systemd/system/
+
 # Enable and start the service
 sudo systemctl daemon-reload
 sudo systemctl enable weatherfxlite
 sudo systemctl start weatherfxlite
 sudo systemctl status weatherfxlite
+
+# Enable and start FOTA timer
+sudo systemctl enable weatherfxlite-update.timer
+sudo systemctl start weatherfxlite-update.timer
+echo "FOTA update timer enabled (checks every 6 hours)"
 
 

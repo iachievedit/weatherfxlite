@@ -90,7 +90,9 @@ static std::map<QString, WeatherIcon> nightIcons = {
   {"PartlyCloudy",  {night_PartlyCloudy_png,  night_PartlyCloudy_png_len}},
   {"Rain",          {night_Rain_png,          night_Rain_png_len}},
   {"HeavyRain",     {night_Rain_png,          night_Rain_png_len}},
-  {"Thunderstorms", {night_Thunderstorms_png, night_Thunderstorms_png_len}},
+  {"Thunderstorms",          {night_Thunderstorms_png, night_Thunderstorms_png_len}},
+  {"IsolatedThunderstorms",  {night_Thunderstorms_png, night_Thunderstorms_png_len}},
+  {"ScatteredThunderstorms", {night_Thunderstorms_png, night_Thunderstorms_png_len}},
   {"Breezy",        {night_Breezy_png,        night_Breezy_png_len}},
   {"Drizzle",       {night_Drizzle_png,       night_Drizzle_png_len}},
   {"Windy",         {night_Windy_png,         night_Windy_png_len}},
@@ -104,8 +106,9 @@ static std::map<QString, WeatherIcon> dayIcons = {
   {"PartlyCloudy",  {day_PartlyCloudy_png, day_PartlyCloudy_png_len}},
   {"Rain",          {day_Rain_png, day_Rain_png_len}},
   {"HeavyRain",          {day_HeavyRain_png, day_HeavyRain_png_len}},
-  {"Thunderstorms", {day_Thunderstorms_png, day_Thunderstorms_png_len}},
-  {"IsolatedThunderstorms", {day_IsolatedThunderstorms_png, day_IsolatedThunderstorms_png_len}},
+  {"Thunderstorms",          {day_Thunderstorms_png,          day_Thunderstorms_png_len}},
+  {"IsolatedThunderstorms",  {day_IsolatedThunderstorms_png,  day_IsolatedThunderstorms_png_len}},
+  {"ScatteredThunderstorms", {day_Thunderstorms_png,          day_Thunderstorms_png_len}},
   {"Cloudy",        {day_Cloudy_png, day_Cloudy_png_len}},
   {"Drizzle",       {day_Drizzle_png, day_Drizzle_png_len}},
   {"Breezy",        {day_Breezy_png, day_Breezy_png_len}},
@@ -277,6 +280,13 @@ void WeatherKitAPI::parseCurrentForecast(void) {
 
             currentConditions.low = lo;
             currentConditions.high = hi;
+            currentConditions.precipitationChance = round(f["precipitationChance"].toDouble() * 100);
+
+            QString forecastCode = f["conditionCode"].toString();
+            if (dayIcons.count(forecastCode))
+              currentConditions.precipWeatherIcon = dayIcons[forecastCode];
+            else
+              currentConditions.precipWeatherIcon = dayIcons["Rain"];
 
           } 
         }
